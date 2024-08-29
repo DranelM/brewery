@@ -1,31 +1,33 @@
-package springframework.brewery.services;
+package springframework.brewery.services.v2;
+
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import springframework.brewery.web.model.BeerDto;
+import springframework.brewery.web.model.v2.BeerDtoV2;
+import springframework.brewery.web.model.v2.BeerStyleEnum;
 
 import java.util.UUID;
 
-@Slf4j
 @Service
-public class BeerServiceImpl implements BeerService {
+@Slf4j
+public class BeerServiceV2Impl implements BeerServiceV2 {
     @Override
-    public BeerDto getBeerById(UUID beerId) {
-        return BeerDto.builder().id(UUID.randomUUID())
+    public BeerDtoV2 getBeerById(UUID beerId) {
+        return BeerDtoV2.builder().id(UUID.randomUUID())
             .beerName("Galaxy Cat")
-            .beerStyle("Pale Ale")
+            .beerStyle(BeerStyleEnum.LAGER)
             .build();
     }
 
     @Override
-    public BeerDto saveNewBeer(BeerDto beerDto) {
-        return BeerDto.builder()
+    public BeerDtoV2 saveNewBeer(BeerDtoV2 beerDto) {
+        return BeerDtoV2.builder()
             .id(UUID.randomUUID())
             .build();
     }
 
     @Override
-    public void updateBeer(UUID beerId, BeerDto beerDto) {
+    public void updateBeer(UUID beerId, BeerDtoV2 beerDto) {
 //        todo impl - would add a real impl to update beer
         log.debug("Updating a beer...");
     }
