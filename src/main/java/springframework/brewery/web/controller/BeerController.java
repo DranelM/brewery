@@ -1,5 +1,6 @@
 package springframework.brewery.web.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,17 +34,17 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity handlePost(@RequestBody BeerDto beerDto) {
+    public ResponseEntity handlePost(@Valid @RequestBody BeerDto beerDto) {
         BeerDto savedDto = beerService.saveNewBeer(beerDto);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/beer/" + savedDto.getId().toString());
+        headers.add("Location", "/api/v1/beer/" + savedDto.getId());
 
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity handleUpdate(@PathVariable UUID beerId, @RequestBody BeerDto beerDto) {
+    public ResponseEntity handleUpdate(@PathVariable UUID beerId, @Valid @RequestBody BeerDto beerDto) {
         beerService.updateBeer(beerId, beerDto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -54,5 +55,4 @@ public class BeerController {
     public void handleDelete(@PathVariable UUID beerId) {
         beerService.deleteById(beerId);
     }
-
 }
